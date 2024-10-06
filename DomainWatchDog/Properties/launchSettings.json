@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "DomainWatchDog": {
+      "commandName": "Project",
+      "commandLineArgs": "--dns 1.1.1.1 --domain www.sme.sk --file \"C:\\Users\\misol\\source\\repos\\DomainWatchDog\\DomainWatchDog\\private_ranges.yaml\" --interval 50 --rsyslog 127.0.0.1"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}
