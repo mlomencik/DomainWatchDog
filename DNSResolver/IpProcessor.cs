@@ -1,36 +1,43 @@
-﻿using DNSResolver.Models;
+﻿using DnsClient.Protocol;
+using DNSResolver.Models;
 using System.Net;
-using YamlDotNet.Serialization;
-using YamlDotNet.Serialization.NamingConventions;
 
 namespace DNSResolver;
 public static class IpProcessor
 {
-    public static List<IPRange> LoadPrivateIpRanges(string filePath)
+    /// <summary>
+    /// Checks if the resolved IP address is suspicious (private IP or low TTL).
+    /// </summary>
+    /// <param name="record"></param>
+    /// <param name="privateRanges"></param>
+    /// <returns></returns>
+    public static string CheckSuspiciousRecord(DnsResourceRecord record, List<PrivateIpRange> privateRanges)
     {
-        IDeserializer deserializer = new DeserializerBuilder()
-            .WithNamingConvention(CamelCaseNamingConvention.Instance)
-            .Build();
-
-        using (StreamReader reader = new StreamReader(filePath)) {
-            return deserializer.Deserialize<List<IPRange>>(reader);
+        // Check if the resolved IP belongs to any of the private ranges
+        if (record is ARecord aRecord) {
+            IPAddress ip = aRecord.Address;
+            foreach (PrivateIpRange range in privateRanges) {
+                if (IsInRange(ip, range))
+                    return "Private IP detected";
+            }
+            if (aRecord.TimeToLive < 25) {
+                return "Suspicious TTL detected";
+            }
         }
+        return string.Empty;
     }
 
-    public static bool IsPrivateIp(IPAddress ip, List<IPRange> privateRanges)
-    {
-        foreach (IPRange range in privateRanges) {
-            if (IsInRange(ip, range))
-                return true;
-        }
-        return false;
-    }
-
-    public static bool IsInRange(IPAddress ip, IPRange range)
+    /// <summary>
+    /// Checks if the specified IP address is within the specified range.
+    /// </summary>
+    /// <param name="ip"></param>
+    /// <param name="range"></param>
+    /// <returns></returns>
+    public static bool IsInRange(IPAddress ip, PrivateIpRange range)
     {
         byte[] ipBytes = ip.GetAddressBytes();
-        byte[] lowerBytes = range.Start.GetAddressBytes();
-        byte[] upperBytes = range.End.GetAddressBytes();
+        byte[] lowerBytes = range.Start!.GetAddressBytes();
+        byte[] upperBytes = range.End!.GetAddressBytes();
 
         bool lowerBoundary = true, upperBoundary = true;
 

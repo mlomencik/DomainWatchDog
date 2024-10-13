@@ -1,22 +1,29 @@
 ﻿using DnsClient;
 using DnsClient.Protocol;
+using LoggingHandler;
 using System.Net;
 
 namespace DNSResolver;
-public class DnsProcessor(string dnsServer)
+public class DnsProcessor(string dnsServer, MultiLogger logger)
 {
     private readonly LookupClient LookupClient = new(IPAddress.Parse(dnsServer));
+    private readonly MultiLogger Logger = logger;
 
-    public List<IPAddress> ResolveDomain(string domain)
+    /// <summary>
+    /// Resolves the specified domain using the configured DNS server.
+    /// </summary>
+    /// <param name="domain"></param>
+    /// <returns></returns>
+    public List<DnsResourceRecord> ResolveDomain(string domain)
     {
-        List<IPAddress> ipAddresses = [];
+        Logger.ConsoleLogger?.Debug($"Resolving domain: {domain}");
+        List<DnsResourceRecord> resolvedAdresses = [];
 
         IDnsQueryResponse result = LookupClient.Query(domain, QueryType.A);
         foreach (DnsResourceRecord? answer in result.Answers) {
-            if (answer is ARecord aRecord) {
-                ipAddresses.Add(aRecord.Address);
-            }
+            resolvedAdresses.Add(answer);
+
         }
-        return ipAddresses;
+        return resolvedAdresses;
     }
 }

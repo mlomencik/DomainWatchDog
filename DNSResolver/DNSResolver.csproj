@@ -11,4 +11,8 @@
     <PackageReference Include="YamlDotNet" Version="16.1.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\RSyslogHandler\LoggingHandler.csproj" />
+  </ItemGroup>
+
 </Project>

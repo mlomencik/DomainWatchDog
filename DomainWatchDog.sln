@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35312.102
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomainWatchDog", "DomainWatchDog\DomainWatchDog.csproj", "{7E9E474C-9F44-4DB0-BDCA-991DDADD9B2D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DomainWatchDog", "DomainWatchDog\DomainWatchDog.csproj", "{7E9E474C-9F44-4DB0-BDCA-991DDADD9B2D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RSyslogHandler", "RSyslogHandler\RSyslogHandler.csproj", "{FE7710C9-5DD3-4897-B395-8FF96CB39874}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoggingHandler", "RSyslogHandler\LoggingHandler.csproj", "{FE7710C9-5DD3-4897-B395-8FF96CB39874}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNSResolver", "DNSResolver\DNSResolver.csproj", "{D191B164-C5C9-4626-93C0-0A4C337D6F9B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DNSResolver", "DNSResolver\DNSResolver.csproj", "{D191B164-C5C9-4626-93C0-0A4C337D6F9B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

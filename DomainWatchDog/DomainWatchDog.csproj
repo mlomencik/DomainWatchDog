@@ -14,7 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DNSResolver\DNSResolver.csproj" />
-    <ProjectReference Include="..\RSyslogHandler\RSyslogHandler.csproj" />
+    <ProjectReference Include="..\RSyslogHandler\LoggingHandler.csproj" />
   </ItemGroup>
 
 </Project>
