@@ -42,4 +42,4 @@ PrivateIpRanges:
 4.	Run the application with the appropriate command line arguments.
 
 # License
-This project is licensed under the MIT License. See the LICENSE file for details.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
