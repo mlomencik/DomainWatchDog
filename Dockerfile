@@ -25,4 +25,5 @@ RUN dotnet publish "./DomainWatchDog.csproj" -c $BUILD_CONFIGURATION -o /app/pub
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+COPY ["detection_config.yaml", "/app/"]
 ENTRYPOINT ["dotnet", "DomainWatchDog.dll"]

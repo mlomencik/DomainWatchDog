@@ -9,6 +9,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoggingHandler", "RSyslogHa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DNSResolver", "DNSResolver\DNSResolver.csproj", "{D191B164-C5C9-4626-93C0-0A4C337D6F9B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0BE70B02-B24C-4125-9618-83E390728E57}"
+	ProjectSection(SolutionItems) = preProject
+		detection_config.yaml = detection_config.yaml
+		Dockerfile = Dockerfile
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
