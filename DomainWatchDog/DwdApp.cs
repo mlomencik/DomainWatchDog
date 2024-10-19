@@ -43,16 +43,20 @@ public class DwdApp(AppData appData, MultiLogger logger)
 
                 // Check if any of the resolved IPs belong to private ranges
                 foreach (DnsResourceRecord resolvedRecord in resolvedRecords) {
-                    string? result = IpProcessor.CheckSuspiciousRecord(resolvedRecord, AppData.PrivateIPv4Ranges!);
-                    if (result != string.Empty) {
-                        Logger.ConsoleLogger?.Information($"Detected: {result} for {resolvedRecord.DomainName}");
-                        Logger.SendRsyslogMessage(resolvedRecord.ToString(), AppData.Domain);
+                    string? resultIp = IpProcessor.CheckSuspiciousIp(resolvedRecord, AppData.PrivateIPv4Ranges!);
+                    if (resultIp != string.Empty) {
+                        Logger.ConsoleLogger?.Information($"Alert - {resultIp} | Domain: {resolvedRecord.DomainName} | DNS server: {AppData.DNSServer}");
+                        Logger.SendRsyslogMessage(resultIp, AppData.Domain);
+                    }
+                    string? resultTtl = IpProcessor.CheckSuspiciousTtl(resolvedRecord, AppData.A_TTL_LIMIT);
+                    if (resultTtl != string.Empty) {
+                        Logger.ConsoleLogger?.Information($"Alert - {resultTtl} | Domain: {resolvedRecord.DomainName} | DNS server: {AppData.DNSServer}");
+                        Logger.SendRsyslogMessage(resultTtl, AppData.Domain);
                     }
                 }
             }
             catch (Exception ex) {
-                // Log any exceptions
-                Logger.ConsoleLogger?.Error($"Error in DNS check: {ex.Message}");
+                Logger.ConsoleLogger?.Error($"Error in DNS resolve: {ex.Message}");
             }
             // Sleep for the specified interval before running the next check
             Thread.Sleep(TimeSpan.FromSeconds(AppData.RefreshInterval));

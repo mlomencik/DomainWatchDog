@@ -6,23 +6,34 @@ namespace DNSResolver;
 public static class IpProcessor
 {
     /// <summary>
-    /// Checks if the resolved IP address is suspicious (private IP or low TTL).
+    /// Checks if the resolved record IP is from private IP range
     /// </summary>
     /// <param name="record"></param>
-    /// <param name="privateRanges"></param>
+    /// <param name="privateRange"></param>
     /// <returns></returns>
-    public static string CheckSuspiciousRecord(DnsResourceRecord record, List<PrivateIpRange> privateRanges)
+    public static string CheckSuspiciousIp(DnsResourceRecord record, List<PrivateIpRange> privateRange)
     {
         // Check if the resolved IP belongs to any of the private ranges
         if (record is ARecord aRecord) {
             IPAddress ip = aRecord.Address;
-            foreach (PrivateIpRange range in privateRanges) {
+            foreach (PrivateIpRange range in privateRange) {
                 if (IsInRange(ip, range))
-                    return "Private IP detected";
+                    return $"Detected IP from private range: {ip}";
             }
-            if (aRecord.TimeToLive < 25) {
-                return "Suspicious TTL detected";
-            }
+        }
+        return string.Empty;
+    }
+
+    /// <summary>
+    /// Checks if the resolved record TTL is less than the specified limit
+    /// </summary>
+    /// <param name="record"></param>
+    /// <param name="ttlLimit"></param>
+    /// <returns></returns>
+    public static string CheckSuspiciousTtl(DnsResourceRecord record, int ttlLimit)
+    {
+        if (record.TimeToLive < ttlLimit) {
+            return $"Detected suspicious TTL: {record.TimeToLive}";
         }
         return string.Empty;
     }

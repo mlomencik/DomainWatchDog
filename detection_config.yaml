@@ -1,6 +1,6 @@
 ---
 DetectionConfig:
-  TtlLimit: 5
+  TtlLimit: 25
 PrivateIpRanges:
   - Start: 10.0.0.0
     End: 10.255.255.255

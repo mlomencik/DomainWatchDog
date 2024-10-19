@@ -28,6 +28,7 @@ internal static class Program
         // Load detection configuration from the specified file and set the private IP ranges
         Config config = LoadDetectionConfiguration(appData.AddressFilePath);
         appData.PrivateIPv4Ranges = config.PrivateIpRanges;
+        appData.A_TTL_LIMIT = config.DetectionConfig!.TtlLimit;
 
         // Start the DomainWatchDog application
         var app = new DwdApp(appData, new(appData.RSyslogServer));

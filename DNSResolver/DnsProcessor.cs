@@ -16,7 +16,7 @@ public class DnsProcessor(string dnsServer, MultiLogger logger)
     /// <returns></returns>
     public List<DnsResourceRecord> ResolveDomain(string domain)
     {
-        Logger.ConsoleLogger?.Debug($"Resolving domain: {domain}");
+        Logger.ConsoleLogger?.Debug($"Resolving domain: {domain} from DNS server: {dnsServer}");
         List<DnsResourceRecord> resolvedAdresses = [];
 
         IDnsQueryResponse result = LookupClient.Query(domain, QueryType.A);
